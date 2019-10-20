@@ -958,7 +958,7 @@ def post_commit():
                     "reservation_id": reservation["reservation_id"],
                     "amount": reservation["amount"],
                 }
-            })
+            }, verify=False)
 
             if res.status_code != 200:
                 raise HttpException(requests.codes['internal_server_error'], "決済に失敗しました。カードトークンや支払いIDが間違っている可能性があります")
@@ -1105,7 +1105,7 @@ def post_user_reservation_cancel(item_id):
 
                 payment_api = os.getenv('PAYMENT_API', 'http://payment:5000')
 
-                res = requests.delete(payment_api+"/payment/" + reservation["payment_id"])
+                res = requests.delete(payment_api+"/payment/" + reservation["payment_id"], verify=False)
 
                 if res.status_code != 200:
                     raise HttpException(requests.codes['internal_server_error'], "決済のキャンセルに失敗しました")
