@@ -31,28 +31,7 @@
   tags: users
 
 - name: create isucon users
-  user: name=isucon shell=/bin/bash state=present group=isucon append=yes groups=isucon password="{{ password | password_hash('sha512') }}"
-  tags: users
-
-- name: create .ssh directory
-  file: path=/home/{{ item }}/.ssh state=directory owner={{ item }} group={{ item }} mode=0700
-  with_items:
-    - admin
-    - isucon
-  tags: users
-
-- name: create authorized_keys
-  copy: content="{{ public_keys }}" dest=/home/{{ item }}/.ssh/authorized_keys owner={{ item }} group={{ item }} mode=0600
-  with_items:
-    - admin
-    - isucon
-  tags: users
-
-- name: configure bash profile
-  template: src=bash_profile.j2 dest=/home/{{ item }}/.bash_profile owner={{ item }} group={{ item }} mode=0644
-  with_items:
-    - admin
-    - isucon
+  user: name=isucon shell=/bin/bash state=present group=isucon append=yes groups=isucon
   tags: users
 
 - name: 'Install common packages'

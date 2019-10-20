@@ -1,16 +1,3 @@
-- name: limit memory
-  template: src=grub dest=/etc/default/grub owner=root group=root mode=0644
-  tags: x
-  notify: update-grub2
-
-- name: allow password authentication
-  replace:
-    dest: /etc/ssh/sshd_config
-    regexp: 'PasswordAuthentication no'
-    replace: 'PasswordAuthentication yes'
-  notify: restart ssh
-  tags: challenge
-
 - name: create isutrain directory
   file: path="/home/isucon/isutrain" state=directory mode=0755 owner=isucon group=isucon
   tags: challenge
@@ -20,21 +7,17 @@
   tags:
     - challenge
     - webapp
-  notify: restart golang
+  notify: restart python
 
 - name: create systemd services
   template: src=isutrain.service dest="/etc/systemd/system/isutrain-{{ item }}.service" owner=root group=root mode=0644
   with_items:
-    - go
-    - ruby
-    - php
     - python
-    - perl
   tags: challenge
   notify: systemctl daemon-reload
 
 - name: enabled default service
-  service: name=isutrain-go enabled=yes state=started
+  service: name=isutrain-python enabled=yes state=started
   tags: challenge
 
 - name: install nginx

@@ -5,8 +5,8 @@
 - name: reload nginx
   service: name=nginx state=reloaded
 
-- name: restart golang
-  service: name=isutrain-go state=restarted
+- name: restart python
+  service: name=isutrain-python state=restarted
 
 - name: restart ssh
   service: name=ssh state=restarted
