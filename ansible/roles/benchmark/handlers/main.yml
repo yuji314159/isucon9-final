@@ -10,6 +10,3 @@
 
 - name: restart payment
   service: name=payment state=restarted
-
-- name: restart benchworker
-  service: name=benchworker state=restarted
