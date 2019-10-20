@@ -85,10 +85,12 @@ bench/bin/bench_darwin run --payment=<課金APIのアドレス> --target=<webapp
 
 ## デプロイ
 
+Requires go 13.0 later version.
+
 ```bash
-make archive
+make
 cd ansible
-ansible-playbook -i hosts -u root -s -c paramiko -D playbook.yml
+ansible-playbook -i hosts -c paramiko -D playbook.yml
 ```
 
 ## 既知の問題
